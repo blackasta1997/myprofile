@@ -1,16 +1,9 @@
-import data from "./data/data";
+import HeroContentDisplay from "./components/display/heroContentdisplay";
 
-export default async function Home() {
-  const testContent = await data();
+export default function Home() {
   return (
     <main>
-      <div className="container">
-        {testContent.map((content) => (
-          <div key={content.sys.id}>
-            <h2>{String(content.fields.title)}</h2>
-          </div>
-        ))}
-      </div>
+      <HeroContentDisplay />
     </main>
   );
 }
