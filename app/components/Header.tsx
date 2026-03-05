@@ -6,7 +6,7 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 bg-white shadow-sm z-50">
+    <header className="fixed top-0 left-0 right-0 shadow-sm z-50">
       <div className="max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 py-4">
         <div className="flex justify-between items-center">
           {/* Logo */}
@@ -17,12 +17,10 @@ export default function Header() {
 
           {/* Auth Buttons */}
           <div className="flex items-center space-x-4">
-            <button className="text-gray-700 hover:text-gray-900 font-medium transition">
-              Log in
-            </button>
-            <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-full transition">
-              Sign up
-            </button>
+            <a href="javascript:void(0)" className="text-gray-700 hover:text-gray-900">Log in</a>
+            <a href="javascript:void(0)" className="px-4 py-2 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition">
+              Get started
+            </a>
           </div>
 
           {/* Mobile Menu Button */}

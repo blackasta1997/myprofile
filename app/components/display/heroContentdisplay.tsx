@@ -25,7 +25,7 @@ const HeroContentDisplay = async () => {
       </div>
       <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 min-h-screen flex flex-col justify-center">
         <div className="max-w-2xl space-y-6">
-          <h1 className="text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-black text-gray-900 leading-tight tracking-tight">
+          <h1 className="text-9xl sm:text-5xl lg:text-5xl xl:text-6xl font-black text-gray-900 leading-tight tracking-tight">
             {String(title)}
           </h1>
           <p className="text-sm sm:text-base text-gray-700 max-w-sm leading-relaxed">
