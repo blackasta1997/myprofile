@@ -5,6 +5,7 @@ export default async function Home() {
   console.log(testContent);
   return (
     <main>
+      {process.env.CONTENTFUL_SPACE_ID}
     </main>
   );
 }
