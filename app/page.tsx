@@ -1,7 +1,7 @@
-import Image from "next/image";
-import Link from "next/link";
+import data from "./data/data";
 
-export default function Home() {
+export default async function Home() {
+  const testContent = await data();
   return (
     <main>
     </main>
