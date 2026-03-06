@@ -14,10 +14,8 @@ export default function Header() {
             <span className="text-xl font-bold text-gray-900">Lumina Health</span>
           </div>
           <div className="flex items-center space-x-4">
-            <a href="javascript:void(0)" className="text-gray-700 hover:text-gray-900">Log in</a>
-            <a href="javascript:void(0)" className="px-4 py-2 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition">
-              Get started
-            </a>
+            <a href="/login" className="text-gray-700 hover:text-gray-900">Log in</a>
+            <a href="/signup" className="px-4 py-2 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition"> Get started </a>
           </div>
           <button className="md:hidden p-2">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
