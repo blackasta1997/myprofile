@@ -18,7 +18,7 @@ export default function Header() {
 
   return (
     <>
-      <header className={`fixed top-0 left-0 right-0 z-40 ${isScrolled ? 'bg-white shadow-sm' : ''}`}>
+      <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md' : 'bg-transparent'}`}>
         <div className="max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-2">

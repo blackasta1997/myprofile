@@ -2,7 +2,13 @@ import Image from "next/image";
 import heroContent from "../data/heroContent"
 
 const HeroContentDisplay = async () => {
-  const heroValue = await heroContent();
+  const heroValues = await heroContent("heroContent", 1);
+  const heroValue = heroValues && heroValues.length > 0 ? heroValues[0] : null;
+  
+  if (!heroValue) {
+    return <section className="relative h-screen bg-gray-50 overflow-hidden"></section>;
+  }
+
   const title = heroValue?.fields?.title;
   const heroTextH2 = heroValue?.fields?.heroTextH2;
   const displayAppointButton = heroValue?.fields?.displayAppointButton ? "SCHEDULE APPOINTMENT" : null;
