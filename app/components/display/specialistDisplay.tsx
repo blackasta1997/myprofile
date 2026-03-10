@@ -22,7 +22,7 @@ const SpecialistDisplay = async () => {
           }
           const doctorImage = doctorProfileImage;
           return (
-            <div>
+            <div key={item.sys.id}>
               <div className="bg-gray-200 h-64 flex items-center justify-center overflow-hidden relative">
                 <img src={doctorImage}
                   alt={description}
@@ -30,7 +30,7 @@ const SpecialistDisplay = async () => {
                 />
                 <div className="absolute inset-0 bg-blue-600 opacity-0 group-hover:opacity-10 transition-opacity duration-500" />
               </div>
-              <div key={item.sys.id} className="specialist-card p-6 bg-white rounded-lg shadow hover:shadow-lg transition-shadow">
+              <div className="specialist-card p-6 bg-white rounded-lg shadow hover:shadow-lg transition-shadow">
                 <h3 className="text-xl text-center font-bold text-gray-900 mb-2">{item.fields?.name || "Doctor"}</h3>
                 <p className="text-blue-600 text-center font-semibold mb-3">{specializationNames || "Specialist"}</p>
                 <p className="text-gray-600 text-center text-sm leading-relaxed">{item.fields?.description || ""}</p>
