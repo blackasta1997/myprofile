@@ -1,5 +1,6 @@
 import Image from "next/image";
-import heroContent from "../data/heroContent"
+import heroContent from "../data/heroContent";
+import SignUpButton from "./SignUpButton";
 
 const HeroContentDisplay = async () => {
   const heroValues = await heroContent("heroContent", 1);
@@ -23,7 +24,7 @@ const HeroContentDisplay = async () => {
     description = (heroImageField as any)?.fields?.description || "";
   }
   const heroImage = heroImageUrl;
-
+  
   return (
     <section className="relative h-screen bg-gray-50 overflow-hidden">
       <div className="absolute inset-0 hidden lg:block">
@@ -39,9 +40,7 @@ const HeroContentDisplay = async () => {
           <p className="text-sm sm:text-base text-gray-700 max-w-sm leading-relaxed animate-fadeInUp">{String(heroTextH2)}</p>
           {displayAppointButton && (
             <div className="animate-fadeInUp">
-              <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg uppercase text-sm tracking-wider">
-                {String(displayAppointButton)}
-              </button>
+              <SignUpButton label={String(displayAppointButton)} />
             </div>
           )}
         </div>

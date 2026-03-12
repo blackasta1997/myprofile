@@ -20,11 +20,6 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
     setIsLoading(true);
 
     try {
-      // Add your login logic here
-      console.log('Login attempt:', { email, password, rememberMe });
-      // Example: await login(email, password);
-      
-      // For now, just close the modal after a short delay
       setTimeout(() => {
         setIsLoading(false);
         onClose();
