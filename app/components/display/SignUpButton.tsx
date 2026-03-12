@@ -10,7 +10,7 @@ const SignUpButton = ({ label }: SignUpButtonProps) => {
   const router = useRouter();
 
   const redirectToSignUp = () => {
-    router.push("/signup");
+    router.push("/appointment");
   };
 
   return (

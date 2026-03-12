@@ -20,10 +20,19 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
     setIsLoading(true);
 
     try {
-      setTimeout(() => {
-        setIsLoading(false);
-        onClose();
-      }, 500);
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      const result = await response.json();
+      if(result.items.length > 0) {
+        document.cookie = `loggedIn=true; path=/; max-age=${60 * 60 * 24 * 7}`; // 7 days
+        setTimeout(() => {
+          setIsLoading(false);
+          onClose();
+        }, 1000);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
       setIsLoading(false);
