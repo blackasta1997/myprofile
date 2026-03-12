@@ -30,19 +30,23 @@ export default function AppointmentPage() {
     setMessage(null);
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      setMessage({ type: 'success', text: 'Appointment booked successfully!' });
-      setFormData({
-        fullName: '',
-        email: '',
-        phoneNumber: '',
-        appointmentDate: '',
-        preferredTime: '',
-        reasonForVisit: '',
-        additionalNotes: '',
-        contactMethod: 'phone',
+      console.log(formData);
+      const response = await fetch('/api/appointment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setMessage({ type: 'success', text: 'Signup successful!' });
+        setFormData({ fullName: '', email: '', phoneNumber: '', appointmentDate: '', preferredTime: '', reasonForVisit: '', additionalNotes: '', contactMethod: 'phone' });
+      } else {
+        setMessage({ type: 'error', text: data.error || 'Signup failed' });
+      }
     } catch (error) {
       setMessage({ type: 'error', text: 'Failed to book appointment. Please try again.' });
     } finally {
@@ -118,11 +122,9 @@ export default function AppointmentPage() {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Personal Information Section */}
             <div>
               <h3 className="text-sm font-semibold text-gray-700 mb-3">Personal Information</h3>
               <div className="space-y-3">
-                {/* Full Name */}
                 <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent">
                   <div className="bg-blue-50 px-3 py-2.5 border-r border-gray-200">
                     <div className="flex items-center gap-1.5">
@@ -134,8 +136,6 @@ export default function AppointmentPage() {
                   </div>
                   <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} placeholder="Enter your full name" className="flex-1 px-3 py-2.5 text-sm focus:outline-none" required/>
                 </div>
-
-                {/* Email Address */}
                 <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent">
                   <div className="bg-blue-50 px-3 py-2.5 border-r border-gray-200">
                     <div className="flex items-center gap-1.5">

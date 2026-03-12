@@ -6,7 +6,6 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { firstName, lastName, email, password } = body;
 
-    // Validate required fields
     if (!firstName || !lastName || !email || !password) {
       return NextResponse.json(
         { error: 'All fields are required' },
@@ -14,7 +13,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create entry in Contentful
     const entry = await createSignupEntry({
       firstName,
       lastName,
