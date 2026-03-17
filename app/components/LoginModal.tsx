@@ -20,18 +20,29 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
     setIsLoading(true);
 
     try {
+      const normalizedEmail = email.trim().toLowerCase();
+      const normalizedPassword = password.trim();
+
       const response = await fetch('/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email: normalizedEmail, password: normalizedPassword }),
       });
+
       const result = await response.json();
-      if(result.items.length > 0) {
+      if (!response.ok) {
+        throw new Error(result.error || 'Login failed');
+      }
+
+      if (result.items?.length > 0) {
         document.cookie = `loggedIn=true; path=/; max-age=${60 * 60 * 24 * 7}`; // 7 days
         setTimeout(() => {
           setIsLoading(false);
           onClose();
         }, 1000);
+      } else {
+        setError('Email or password does not match our records.');
+        setIsLoading(false);
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');

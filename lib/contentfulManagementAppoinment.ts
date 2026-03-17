@@ -56,8 +56,5 @@ export async function createAppointmentEntry(data: {
     },
   });
 
-  // Publish the entry
-  await entry.publish();
-
   return entry;
 }
