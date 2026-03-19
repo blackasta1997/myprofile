@@ -1,5 +1,39 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from 'contentful';
 import { createAppointmentEntry } from '@/lib/contentfulManagementAppoinment';
+
+export async function GET() {
+  try {
+    const client = createClient({
+      space: process.env.CONTENTFUL_SPACE_ID!,
+      accessToken: process.env.CONTENTFUL_ACCESS_TOKEN!,
+    });
+
+    const res = await client.getEntries({
+      content_type: 'appointment',
+      limit: 1000,
+    });
+
+    const appointments = res.items.map((item: any) => ({
+      id: item.sys.id,
+      name: item.fields.name,
+      email: item.fields.email,
+      phoneNumber: item.fields.phoneNumber,
+      appointmentDate: item.fields.appointmentDate,
+      reasonForVisit: item.fields.reasonForVisit,
+      additionalNotes: item.fields.additionalNotes,
+      preferedContact: item.fields.preferedContact,
+    }));
+
+    return NextResponse.json({ appointments });
+  } catch (error: any) {
+    console.error('Failed to fetch appointments:', error);
+    return NextResponse.json(
+      { error: 'Failed to fetch appointments' },
+      { status: 500 }
+    );
+  }
+}
 
 export async function POST(request: NextRequest) {
   try {

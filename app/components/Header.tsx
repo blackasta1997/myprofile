@@ -34,11 +34,19 @@ export default function Header() {
             {!isSignupPage && (
               <div className="flex items-center space-x-4">
                 {isLoggedIn ? (
-                  <button className="p-2 rounded-full hover:bg-gray-100 transition">
-                    <svg className="w-8 h-8 text-gray-700" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
-                    </svg>
-                  </button>
+                  <>
+                    <a href="/calendar" className="flex items-center gap-1.5 text-gray-700 hover:text-blue-600 font-medium transition text-sm">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                      Calendar
+                    </a>
+                    <button className="p-2 rounded-full hover:bg-gray-100 transition">
+                      <svg className="w-8 h-8 text-gray-700" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                      </svg>
+                    </button>
+                  </>
                 ) : (
                   <>
                     <button onClick={() => setIsLoginModalOpen(true)} className="text-gray-900 hover:text-black font-semibold transition">Log in</button>
@@ -56,11 +64,7 @@ export default function Header() {
         </div>
       </header>
 
-      <LoginModal
-        isOpen={isLoginModalOpen}
-        onClose={() => setIsLoginModalOpen(false)}
-        onLoginSuccess={() => setIsLoggedIn(true)}
-      />
+      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} onLoginSuccess={() => setIsLoggedIn(true)}/>
     </>
   );
 }
