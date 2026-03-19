@@ -18,6 +18,7 @@ export async function POST(request: NextRequest) {
     });
 
     if (res.items.length > 0) {
+      console.log(`[LOGIN SUCCESS] User logged in: ${email} at ${new Date().toISOString()}`);
       try {
         await createLoginLogEntry({
           email,
@@ -26,6 +27,8 @@ export async function POST(request: NextRequest) {
       } catch (logError) {
         console.error("Failed to create login log:", logError);
       }
+    } else {
+      console.log(`[LOGIN FAILED] Invalid credentials for: ${email} at ${new Date().toISOString()}`);
     }
 
     return NextResponse.json({ items: res.items || [] });
