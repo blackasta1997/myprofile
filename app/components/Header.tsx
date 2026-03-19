@@ -59,6 +59,7 @@ export default function Header() {
       <LoginModal
         isOpen={isLoginModalOpen}
         onClose={() => setIsLoginModalOpen(false)}
+        onLoginSuccess={() => setIsLoggedIn(true)}
       />
     </>
   );

@@ -5,9 +5,10 @@ import { useState } from 'react';
 interface LoginModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onLoginSuccess: () => void;
 }
 
-export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
+export default function LoginModal({ isOpen, onClose, onLoginSuccess }: LoginModalProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
@@ -38,6 +39,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
         document.cookie = `loggedIn=true; path=/; max-age=${60 * 60 * 24 * 7}`; // 7 days
         setTimeout(() => {
           setIsLoading(false);
+          onLoginSuccess();
           onClose();
         }, 1000);
       } else {
