@@ -18,10 +18,14 @@ export async function POST(request: NextRequest) {
     });
 
     if (res.items.length > 0) {
-      await createLoginLogEntry({
-        email,
-        loginDate: new Date().toISOString(),
-      });
+      try {
+        await createLoginLogEntry({
+          email,
+          loginDate: new Date().toISOString(),
+        });
+      } catch (logError) {
+        console.error("Failed to create login log:", logError);
+      }
     }
 
     return NextResponse.json({ items: res.items || [] });
