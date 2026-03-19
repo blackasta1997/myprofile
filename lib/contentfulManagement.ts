@@ -54,3 +54,21 @@ export async function createSignupEntry(data: {
 
   return entry;
 }
+
+export async function createLoginLogEntry(data: {
+  email: string;
+  loginDate: string;
+}) {
+  const environment = await getEnvironment();
+
+  const entry = await environment.createEntry('loginLog', {
+    fields: {
+      email: { 'en-US': data.email },
+      loginDate: { 'en-US': data.loginDate },
+    },
+  });
+
+  await entry.publish();
+
+  return entry;
+}
