@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import LoginModal from './LoginModal';
+import Link from "next/link";
 
 export default function Header() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -21,16 +22,19 @@ export default function Header() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
+  function logOut() {
+    document.cookie = "loggedIn=false; path=/; max-age=0";
+    setIsLoggedIn(false);
+  }
   return (
     <>
       <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md' : 'bg-transparent'}`}>
         <div className="max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 py-4">
           <div className="flex justify-between items-center">
-            <div className="flex items-center space-x-2">
+            <a href="/" className="flex items-center space-x-2">
               <span className="text-2xl">⚕️</span>
               <span className="text-xl font-bold text-gray-900">Lumina Health</span>
-            </div>
+            </a>
             {!isSignupPage && (
               <div className="flex items-center space-x-4">
                 {isLoggedIn ? (
@@ -41,11 +45,19 @@ export default function Header() {
                       </svg>
                       Calendar
                     </a>
-                    <button className="p-2 rounded-full hover:bg-gray-100 transition">
-                      <svg className="w-8 h-8 text-gray-700" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
-                      </svg>
-                    </button>
+                    <div className="dropdown">
+                      <button className="p-2 rounded-full hover:bg-gray-100 transition">
+                        <svg className="w-8 h-8 text-gray-700" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+                        </svg>
+                      </button>
+                      <div className="dropdown-content">
+                        <ul>
+                          <li><Link href= "/settings">Settings</Link></li>
+                          <li onClick={logOut}>Logout</li>
+                        </ul>
+                      </div>
+                    </div>
                   </>
                 ) : (
                   <>
@@ -63,8 +75,7 @@ export default function Header() {
           </div>
         </div>
       </header>
-
-      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} onLoginSuccess={() => setIsLoggedIn(true)}/>
+      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} onLoginSuccess={() => setIsLoggedIn(true)} />
     </>
   );
 }

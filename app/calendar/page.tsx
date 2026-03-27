@@ -194,15 +194,8 @@ export default function CalendarPage() {
             const key = `${miniYear}-${miniMonth}-${day}`;
             const hasAppts = appointmentsByDate[key] && appointmentsByDate[key].length > 0;
             return (
-              <button
-                key={day}
-                onClick={() => {
-                  setCurrentDate(new Date(miniYear, miniMonth, 1));
-                }}
-                className={`text-center text-xs py-1 rounded-full w-7 h-7 mx-auto flex items-center justify-center relative
-                  ${isTodayMini ? 'bg-blue-600 text-white font-bold' : 'text-gray-700 hover:bg-gray-100'}
-                `}
-              >
+              <button key={day} onClick={() => { setCurrentDate(new Date(miniYear, miniMonth, 1)); }}
+                className={`text-center text-xs py-1 rounded-full w-7 h-7 mx-auto flex items-center justify-center relative ${isTodayMini ? 'bg-blue-600 text-white font-bold' : 'text-gray-700 hover:bg-gray-100'} `}>
                 {day}
                 {hasAppts && !isTodayMini && (
                   <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-blue-500 rounded-full" />
@@ -263,25 +256,14 @@ export default function CalendarPage() {
           {/* Top bar */}
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-4">
-              <button
-                onClick={goToToday}
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition"
-              >
-                Today
-              </button>
+              <button onClick={goToToday} className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">Today</button>
               <div className="flex items-center gap-1">
-                <button
-                  onClick={() => (view === 'month' ? navigateMonth(-1) : navigateWeek(-1))}
-                  className="p-2 hover:bg-gray-200 rounded-full transition"
-                >
+                <button onClick={() => (view === 'month' ? navigateMonth(-1) : navigateWeek(-1))} className="p-2 hover:bg-gray-200 rounded-full transition">
                   <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                   </svg>
                 </button>
-                <button
-                  onClick={() => (view === 'month' ? navigateMonth(1) : navigateWeek(1))}
-                  className="p-2 hover:bg-gray-200 rounded-full transition"
-                >
+                <button onClick={() => (view === 'month' ? navigateMonth(1) : navigateWeek(1))} className="p-2 hover:bg-gray-200 rounded-full transition">
                   <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
@@ -296,18 +278,10 @@ export default function CalendarPage() {
             </div>
             <div className="flex items-center gap-2">
               <div className="flex bg-white border border-gray-300 rounded-lg overflow-hidden">
-                <button
-                  onClick={() => setView('month')}
-                  className={`px-4 py-2 text-sm font-medium transition ${view === 'month' ? 'bg-blue-50 text-blue-700' : 'text-gray-600 hover:bg-gray-50'}`}
-                >
+                <button onClick={() => setView('month')} className={`px-4 py-2 text-sm font-medium transition ${view === 'month' ? 'bg-blue-50 text-blue-700' : 'text-gray-600 hover:bg-gray-50'}`}>
                   Month
                 </button>
-                <button
-                  onClick={() => setView('week')}
-                  className={`px-4 py-2 text-sm font-medium transition ${view === 'week' ? 'bg-blue-50 text-blue-700' : 'text-gray-600 hover:bg-gray-50'}`}
-                >
-                  Week
-                </button>
+                <button onClick={() => setView('week')} className={`px-4 py-2 text-sm font-medium transition ${view === 'week' ? 'bg-blue-50 text-blue-700' : 'text-gray-600 hover:bg-gray-50'}`}>Week</button>
               </div>
             </div>
           </div>
@@ -334,9 +308,7 @@ export default function CalendarPage() {
                   {/* Day headers */}
                   <div className="grid grid-cols-7 border-b border-gray-200">
                     {DAYS.map((day) => (
-                      <div key={day} className="px-3 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                        {day}
-                      </div>
+                      <div key={day} className="px-3 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">{day}</div>
                     ))}
                   </div>
                   {/* Calendar grid */}
@@ -347,21 +319,9 @@ export default function CalendarPage() {
                       const isTodayCell = isToday(cell.day, cell.month, cell.year);
 
                       return (
-                        <div
-                          key={idx}
-                          className={`min-h-[120px] border-b border-r border-gray-100 p-1.5 transition-colors
-                            ${!cell.isCurrentMonth ? 'bg-gray-50' : 'bg-white hover:bg-blue-50/30'}
-                          `}
-                        >
+                        <div key={idx} className={`min-h-[120px] border-b border-r border-gray-100 p-1.5 transition-colors ${!cell.isCurrentMonth ? 'bg-gray-50' : 'bg-white hover:bg-blue-50/30'}`}>
                           <div className="flex justify-between items-start mb-1">
-                            <span
-                              className={`inline-flex items-center justify-center w-7 h-7 text-sm rounded-full
-                                ${isTodayCell ? 'bg-blue-600 text-white font-bold' : ''}
-                                ${!cell.isCurrentMonth ? 'text-gray-400' : 'text-gray-700'}
-                              `}
-                            >
-                              {cell.day}
-                            </span>
+                            <span className={`inline-flex items-center justify-center w-7 h-7 text-sm rounded-full ${isTodayCell ? 'bg-blue-600 text-white font-bold' : ''} ${!cell.isCurrentMonth ? 'text-gray-400' : 'text-gray-700'}`}>{cell.day}</span>
                             {dayAppointments.length > 0 && (
                               <span className="text-xs text-gray-400 mt-1">{dayAppointments.length}</span>
                             )}
@@ -370,21 +330,14 @@ export default function CalendarPage() {
                             {dayAppointments.slice(0, 3).map((apt) => {
                               const color = getColorForId(apt.id);
                               return (
-                                <button
-                                  key={apt.id}
-                                  onClick={() => setSelectedAppointment(apt)}
-                                  className={`w-full text-left px-2 py-1 rounded-md text-xs truncate border-l-2 ${color.bg} ${color.text} ${color.border} hover:opacity-75 transition`}
-                                >
+                                <button key={apt.id} onClick={() => setSelectedAppointment(apt)} className={`w-full text-left px-2 py-1 rounded-md text-xs truncate border-l-2 ${color.bg} ${color.text} ${color.border} hover:opacity-75 transition`}>
                                   <span className="font-medium">{formatTime(apt.appointmentDate)}</span>{' '}
                                   {apt.name}
                                 </button>
                               );
                             })}
                             {dayAppointments.length > 3 && (
-                              <button
-                                className="text-xs text-blue-600 hover:text-blue-800 pl-2 font-medium"
-                                onClick={() => setSelectedAppointment(dayAppointments[3])}
-                              >
+                              <button key={`more-${cell.day}`} className="text-xs text-blue-600 hover:text-blue-800 pl-2 font-medium" onClick={() => setSelectedAppointment(dayAppointments[3])}>
                                 +{dayAppointments.length - 3} more
                               </button>
                             )}
@@ -405,11 +358,7 @@ export default function CalendarPage() {
                       return (
                         <div key={i} className="px-2 py-3 text-center border-r border-gray-100 last:border-r-0">
                           <div className="text-xs text-gray-500 font-medium uppercase">{DAYS[i]}</div>
-                          <div
-                            className={`text-xl font-semibold mt-1 w-10 h-10 mx-auto flex items-center justify-center rounded-full
-                              ${isTodayCol ? 'bg-blue-600 text-white' : 'text-gray-800'}
-                            `}
-                          >
+                          <div className={`text-xl font-semibold mt-1 w-10 h-10 mx-auto flex items-center justify-center rounded-full ${isTodayCol ? 'bg-blue-600 text-white' : 'text-gray-800'}`}>
                             {date.getDate()}
                           </div>
                         </div>
@@ -432,18 +381,11 @@ export default function CalendarPage() {
                             return aptDate.getHours() === hour;
                           });
                           return (
-                            <div
-                              key={colIdx}
-                              className="border-r border-gray-100 last:border-r-0 min-h-[60px] p-0.5 relative"
-                            >
+                            <div key={colIdx} className="border-r border-gray-100 last:border-r-0 min-h-[60px] p-0.5 relative">
                               {hourAppts.map((apt) => {
                                 const color = getColorForId(apt.id);
                                 return (
-                                  <button
-                                    key={apt.id}
-                                    onClick={() => setSelectedAppointment(apt)}
-                                    className={`w-full text-left p-1.5 rounded-md text-xs ${color.bg} ${color.text} border-l-2 ${color.border} hover:opacity-75 transition mb-0.5`}
-                                  >
+                                  <button key={apt.id} onClick={() => setSelectedAppointment(apt)} className={`w-full text-left p-1.5 rounded-md text-xs ${color.bg} ${color.text} border-l-2 ${color.border} hover:opacity-75 transition mb-0.5`}>
                                     <div className="font-medium truncate">{apt.name}</div>
                                     <div className="text-[10px] opacity-75">{formatTime(apt.appointmentDate)}</div>
                                   </button>
@@ -464,24 +406,13 @@ export default function CalendarPage() {
 
       {/* Appointment Detail Modal */}
       {selectedAppointment && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
-          onClick={() => setSelectedAppointment(null)}
-        >
-          <div
-            className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
-          >
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm" onClick={() => setSelectedAppointment(null)}>
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden" onClick={(e) => e.stopPropagation()}>
             {/* Modal header */}
             <div className={`px-6 py-4 ${getColorForId(selectedAppointment.id).bg}`}>
               <div className="flex items-center justify-between">
-                <h2 className={`text-lg font-bold ${getColorForId(selectedAppointment.id).text}`}>
-                  Appointment Details
-                </h2>
-                <button
-                  onClick={() => setSelectedAppointment(null)}
-                  className="p-1 hover:bg-black/10 rounded-full transition"
-                >
+                <h2 className={`text-lg font-bold ${getColorForId(selectedAppointment.id).text}`}>Appointment Details</h2>
+                <button onClick={() => setSelectedAppointment(null)} className="p-1 hover:bg-black/10 rounded-full transition">
                   <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
@@ -552,12 +483,7 @@ export default function CalendarPage() {
 
             {/* Modal footer */}
             <div className="px-6 py-4 border-t border-gray-100 flex justify-end">
-              <button
-                onClick={() => setSelectedAppointment(null)}
-                className="px-5 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition"
-              >
-                Close
-              </button>
+              <button onClick={() => setSelectedAppointment(null)} className="px-5 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition" > Close</button>
             </div>
           </div>
         </div>
