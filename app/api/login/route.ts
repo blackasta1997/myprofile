@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
       const storedHashedPassword = res.items[0].fields.password;
       
       // Compare the provided password with stored hash
-      const isPasswordValid = await bcrypt.compare(password, storedHashedPassword);
+      const isPasswordValid = await bcrypt.compare(password, String(storedHashedPassword));
 
       if (isPasswordValid) {
         console.log(`[LOGIN SUCCESS] User logged in: ${email} at ${new Date().toISOString()}`);
