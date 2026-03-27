@@ -36,7 +36,7 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }: LoginMod
       }
 
       if (result.items?.length > 0) {
-        document.cookie = `loggedIn=true; path=/; max-age=${60 * 60 * 24 * 7}`; // 7 days
+        // Cookie is now set server-side by the login API response
         setTimeout(() => {
           setIsLoading(false);
           onLoginSuccess();

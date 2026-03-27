@@ -22,7 +22,8 @@ export default function Header() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-  function logOut() {
+  async function logOut() {
+    await fetch('/api/logout', { method: 'POST' });
     document.cookie = "loggedIn=false; path=/; max-age=0";
     setIsLoggedIn(false);
   }

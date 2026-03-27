@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import { NextRequest, NextResponse } from 'next/server';
 import { createSignupEntry } from '@/lib/contentfulManagement';
 
@@ -13,11 +14,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const entry = await createSignupEntry({
       firstName,
       lastName,
       email,
-      password,
+      password: hashedPassword, // Store hashed password
     });
 
     return NextResponse.json(
@@ -26,9 +30,8 @@ export async function POST(request: NextRequest) {
     );
   } catch (error: any) {
     console.error('Signup error:', error);
-    const errorMessage = error.message || 'Failed to create signup entry';
     return NextResponse.json(
-      { error: errorMessage },
+      { error: error.message || 'Failed to create signup entry' },
       { status: 500 }
     );
   }
