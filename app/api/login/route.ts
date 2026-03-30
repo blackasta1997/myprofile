@@ -25,11 +25,17 @@ export async function POST(request: NextRequest) {
 
       if (isPasswordValid) {
         try {
+          const userId = res.items[0].sys.id;
+          const hashedUserId = await bcrypt.hash(userId, 10);
           console.log(
             `[LOGIN SUCCESS] User logged in: ${email} at ${new Date().toISOString()}`,
           );
           const response = NextResponse.json({ items: res.items });
           response.cookies.set("loggedIn", "true", {
+            path: "/",
+            maxAge: 60 * 60 * 24 * 7,
+          });
+          response.cookies.set("uid", hashedUserId, {
             path: "/",
             maxAge: 60 * 60 * 24 * 7,
           });
