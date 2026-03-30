@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import LoginModal from './LoginModal';
 import Link from "next/link";
+import { useRouter } from 'next/navigation';
 
 export default function Header() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -11,7 +12,7 @@ export default function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const pathname = usePathname();
   const isSignupPage = pathname === '/signup';
-
+  const router = useRouter();
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
@@ -26,6 +27,7 @@ export default function Header() {
     await fetch('/api/logout', { method: 'POST' });
     document.cookie = "loggedIn=false; path=/; max-age=0";
     setIsLoggedIn(false);
+    router.push('/');
   }
   return (
     <>
@@ -54,7 +56,7 @@ export default function Header() {
                       </button>
                       <div className="dropdown-content">
                         <ul>
-                          <li><Link href= "/settings">Settings</Link></li>
+                          <li><Link href="/dashboard">Dashboard</Link></li>
                           <li onClick={logOut}>Logout</li>
                         </ul>
                       </div>
@@ -76,7 +78,11 @@ export default function Header() {
           </div>
         </div>
       </header>
-      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} onLoginSuccess={() => setIsLoggedIn(true)} />
+      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} onLoginSuccess={() => {
+        setIsLoggedIn(true);
+        setIsLoginModalOpen(false);
+        router.push('/dashboard');
+      }} />
     </>
   );
 }

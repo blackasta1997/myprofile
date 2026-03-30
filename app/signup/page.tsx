@@ -51,15 +51,11 @@ export default function SignupPage() {
 
   return (
     <div className="min-h-screen flex bg-gray-50">
-      {/* Left Side - Signup Design Image */}
       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
         <Image src="/images/signup/signup_design.png" alt="Sign up" fill className="object-cover" priority/>
       </div>
-
-      {/* Right Side - Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-md w-full">
-          {/* Header */}
           <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center w-14 h-14 bg-indigo-100 rounded-full mb-4">
               <svg className="w-7 h-7 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -71,6 +67,24 @@ export default function SignupPage() {
           </div>
           <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8">
             <form className="space-y-5" onSubmit={handleSubmit}>
+              {message && (
+                <div className={`flex items-center gap-2 p-3 rounded-lg text-sm ${
+                  message.type === 'success'
+                    ? 'bg-green-50 text-green-700 border border-green-200'
+                    : 'bg-red-50 text-red-700 border border-red-200'
+                }`}>
+                  {message.type === 'success' ? (
+                    <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  ) : (
+                    <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  )}
+                  {message.text}
+                </div>
+              )}
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
@@ -129,28 +143,6 @@ export default function SignupPage() {
                   </button>
                 </div>
               </div>
-
-              {/* Status message */}
-              {message && (
-                <div className={`flex items-center gap-2 p-3 rounded-lg text-sm ${
-                  message.type === 'success'
-                    ? 'bg-green-50 text-green-700 border border-green-200'
-                    : 'bg-red-50 text-red-700 border border-red-200'
-                }`}>
-                  {message.type === 'success' ? (
-                    <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  ) : (
-                    <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  )}
-                  {message.text}
-                </div>
-              )}
-
-              {/* Submit */}
               <button type="submit" disabled={isLoading} className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-lg text-sm font-semibold text-white bg-linear-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200 shadow-md hover:shadow-lg">
                 {isLoading ? (
                   <>

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const loggedIn = request.cookies.get('loggedIn')?.value;
 
   if (loggedIn !== 'true') {
@@ -11,5 +11,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/calendar/:path*', '/appointment/:path*'],
+  matcher: ['/calendar/:path*', '/appointment/:path*', '/profile'],
 };
