@@ -1,13 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from 'contentful';
+import { contentfulClient } from '@/lib/contentful';
 import { createAppointmentEntry } from '@/lib/contentfulManagementAppoinment';
 
 export async function GET() {
   try {
-    const client = createClient({
-      space: process.env.CONTENTFUL_SPACE_ID!,
-      accessToken: process.env.CONTENTFUL_ACCESS_TOKEN!,
-    });
+    const client = contentfulClient;
 
     const res = await client.getEntries({
       content_type: 'appointment',

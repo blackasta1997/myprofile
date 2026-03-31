@@ -1,14 +1,11 @@
 import bcrypt from "bcrypt";
-import { createClient } from "contentful";
+import { contentfulClient } from "@/lib/contentful";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   const { email, password } = await request.json();
 
-  const client = createClient({
-    space: process.env.CONTENTFUL_SPACE_ID!,
-    accessToken: process.env.CONTENTFUL_ACCESS_TOKEN!,
-  });
+  const client = contentfulClient;
 
   try {
     const res = await client.getEntries({

@@ -1,10 +1,7 @@
-import { createClient } from "contentful";
+import { contentfulClient } from "@/lib/contentful";
 
 export default async function heroContent(contentType = "", limit = 0) {
-  const client = createClient({
-    space: process.env.CONTENTFUL_SPACE_ID!,
-    accessToken: process.env.CONTENTFUL_ACCESS_TOKEN!,
-  })
+  const client = contentfulClient;
   
   try {
     const query: any = { content_type: contentType };
