@@ -20,9 +20,29 @@ interface Appointment {
 const ProfilePage = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [profileImage, setProfileImage] = useState('/images/dashboard/profile.png');
+  const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
+  const [imageRemoved, setImageRemoved] = useState(false);
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [appointmentsLoading, setAppointmentsLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+
+  useEffect(() => {
+    const fetchProfileImage = async () => {
+      try {
+        const res = await fetch('/api/personal-info');
+        if (res.ok) {
+          const data = await res.json();
+          const imageUrl = data?.items[0]?.fields?.image?.fields?.file?.url;
+          if (imageUrl) {
+            setProfileImage(`https:${imageUrl}`);
+          }
+        }
+      } catch (error) {
+        console.error('Failed to fetch profile image:', error);
+      }
+    };
+    fetchProfileImage();
+  }, []);
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -35,16 +55,21 @@ const ProfilePage = () => {
             ? data
             : data.appointments || [];
 
-          const mappedAppointments = appointmentsList.map((apt: any) => ({
-            id: apt.id || Math.random().toString(),
-            name: apt.name || 'Unknown',
-            email: apt.email || '',
-            phoneNumber: apt.phoneNumber || '',
-            appointmentDate: apt.appointmentDate || '',
-            reasonForVisit: apt.reasonForVisit || '',
-            additionalNotes: apt.additionalNotes || '',
-            status: 'scheduled' as const,
-          }));
+          const now = new Date();
+          const mappedAppointments = appointmentsList.map((apt: any) => {
+            const appointmentDate = apt.appointmentDate || '';
+            const isPast = appointmentDate && new Date(appointmentDate) < now;
+            return {
+              id: apt.id || Math.random().toString(),
+              name: apt.name || 'Unknown',
+              email: apt.email || '',
+              phoneNumber: apt.phoneNumber || '',
+              appointmentDate,
+              reasonForVisit: apt.reasonForVisit || '',
+              additionalNotes: apt.additionalNotes || '',
+              status: isPast ? 'completed' as const : 'scheduled' as const,
+            };
+          });
 
           setAppointments(mappedAppointments);
         }
@@ -60,17 +85,23 @@ const ProfilePage = () => {
 
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfileImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
+    if (!file) return;
+
+    setSelectedImageFile(file);
+    setImageRemoved(false);
+
+    // Show local preview
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setProfileImage(reader.result as string);
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleDeleteAvatar = () => {
     setProfileImage('/images/dashboard/profile.png');
+    setSelectedImageFile(null);
+    setImageRemoved(true);
   };
 
   const navigationItems = [
@@ -265,7 +296,7 @@ const ProfilePage = () => {
                   </div>
                 )}
 
-                <EditPersonalInformation />
+                <EditPersonalInformation imageFile={selectedImageFile} imageRemoved={imageRemoved} onImageUploaded={(url) => { setProfileImage(url); setSelectedImageFile(null); }} onImageRemoved={() => { setImageRemoved(false); }} />
               </div>
             )}
 
